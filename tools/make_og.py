@@ -6,7 +6,7 @@ here = os.path.dirname(__file__)
 src = Image.open(os.path.join(here, "..", "assets", "bg.webp")).convert("RGB")
 s = W / src.width
 im = src.resize((W, int(src.height * s)), Image.LANCZOS)
-top = int(im.height * 0.30)  # 손과 장미가 가운데 오도록
+top = (im.height - H) // 2  # 가운데 기준으로 자름
 im = im.crop((0, top, W, top + H))
 out = os.path.join(here, "..", "assets", "og.png")
 im.save(out, optimize=True, quality=92)
