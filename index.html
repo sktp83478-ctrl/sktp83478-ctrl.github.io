@@ -15,115 +15,132 @@
 <meta property="og:image:height" content="630">
 <meta property="og:locale" content="ko_KR">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23F3DCE6'/%3E%3Ccircle cx='32' cy='32' r='14' fill='%23995A86'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23F4F0E8'/%3E%3Ccircle cx='32' cy='32' r='14' fill='%23C96442'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap">
 <style>
-/* Layout: a short list. Rows grouped by deadline week, one line each, tap to open. Soft blush palette to match the room. */
+/* Layout: wide table per deadline period, rows expand in place. Claude-app palette: warm ivory ground, clay accent, soft borders. */
 :root {
-  --bg: #FBF7F8;
+  --bg: #F6F4EE;
   --surface: #FFFFFF;
-  --fg: #2A2230;
-  --muted: #7B6F80;
-  --line: #ECE1E7;
-  --accent: #8F4C7C;
-  --accent-soft: #F5E6EE;
-  --crit: #C0433B;
-  --crit-soft: #FBE6E3;
-  --warn: #A8701C;
-  --warn-soft: #FBEFD9;
-  --ok: #3E7A52;
-  --ok-soft: #E3F1E6;
-  --display: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
-  --body: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --surface-2: #FBFAF6;
+  --fg: #26231F;
+  --muted: #6F6A60;
+  --line: #E5E0D5;
+  --accent: #C96442;
+  --accent-soft: #F7E6DD;
+  --crit: #B4412F;
+  --crit-soft: #F8E3DD;
+  --warn: #9A6A14;
+  --warn-soft: #F7ECD2;
+  --ok: #4C7A4E;
+  --ok-soft: #E4EFE1;
+  --font: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #171218; --surface: #211A23; --fg: #EFE7EC; --muted: #A698A4; --line: #352C38;
-    --accent: #D79CC3; --accent-soft: #3A2537;
-    --crit: #F0908A; --crit-soft: #3E221F;
-    --warn: #E6B45C; --warn-soft: #3A2E14;
-    --ok: #8CC89A; --ok-soft: #1F3324;
+    --bg: #1F1D1A; --surface: #282520; --surface-2: #2E2B25; --fg: #ECE7DD; --muted: #A69F91; --line: #3B372F;
+    --accent: #E39772; --accent-soft: #42302A;
+    --crit: #F09A88; --crit-soft: #41281F;
+    --warn: #E4BE6A; --warn-soft: #3D3218;
+    --ok: #9BC79A; --ok-soft: #26352A;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --bg: #171218; --surface: #211A23; --fg: #EFE7EC; --muted: #A698A4; --line: #352C38;
-  --accent: #D79CC3; --accent-soft: #3A2537;
-  --crit: #F0908A; --crit-soft: #3E221F;
-  --warn: #E6B45C; --warn-soft: #3A2E14;
-  --ok: #8CC89A; --ok-soft: #1F3324;
+  --bg: #1F1D1A; --surface: #282520; --surface-2: #2E2B25; --fg: #ECE7DD; --muted: #A69F91; --line: #3B372F;
+  --accent: #E39772; --accent-soft: #42302A;
+  --crit: #F09A88; --crit-soft: #41281F;
+  --warn: #E4BE6A; --warn-soft: #3D3218;
+  --ok: #9BC79A; --ok-soft: #26352A;
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
 html { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
-body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 16px; line-height: 1.5; }
+body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--font); font-size: 15px; line-height: 1.5; }
 img { max-width: 100%; }
 [hidden] { display: none !important; }
 a { color: var(--accent); }
-.wrap { max-width: 640px; margin: 0 auto; padding-inline: 16px; padding-block: 24px 56px; }
+.wrap { max-width: 1180px; margin: 0 auto; padding-inline: 20px; padding-block: 28px 64px; }
+@media (max-width: 600px) { .wrap { padding-inline: 16px; padding-block: 20px 56px; } }
 
-h1 { font-family: var(--display); font-weight: 700; font-size: 30px; line-height: 1.2; margin: 0; letter-spacing: -0.01em; }
-.sub { color: var(--muted); font-size: 14px; margin-top: 6px; }
-.stats { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 12px; font-size: 14.5px; font-variant-numeric: tabular-nums; color: var(--muted); }
-.stats b { color: var(--accent); font-weight: 600; }
+header { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 8px 24px; }
+h1 { font-size: 28px; font-weight: 700; line-height: 1.2; margin: 0; letter-spacing: -0.01em; }
+.sub { color: var(--muted); font-size: 13.5px; margin-top: 4px; }
+.stats { display: flex; gap: 8px; flex-wrap: wrap; }
+.stat { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 8px 14px; font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.stat b { display: block; font-size: 20px; color: var(--fg); font-weight: 700; line-height: 1.1; }
+.stat.hot b { color: var(--crit); }
 
-.toolbar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); padding-block: 12px 10px; margin-top: 12px; border-bottom: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
-.chip { border: 1px solid var(--line); background: var(--surface); color: var(--fg); border-radius: 999px; padding: 6px 12px; font: inherit; font-size: 14px; cursor: pointer; line-height: 1.2; }
+.toolbar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); padding-block: 14px 10px; margin-top: 18px; border-bottom: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.chip { border: 1px solid var(--line); background: var(--surface); color: var(--fg); border-radius: 999px; padding: 6px 13px; font: inherit; font-size: 13.5px; cursor: pointer; line-height: 1.2; }
 .chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
-.toolbar input { flex: 1 1 140px; min-width: 0; font: inherit; font-size: 14px; padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); color: var(--fg); }
-.chip:focus-visible, .toolbar input:focus-visible, .row:focus-visible, .copy:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.toolbar input, .toolbar select { font: inherit; font-size: 13.5px; padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); color: var(--fg); }
+.toolbar input { flex: 1 1 160px; min-width: 0; }
+.toolbar .sp { flex: 1 1 auto; }
+.chip:focus-visible, .toolbar input:focus-visible, .toolbar select:focus-visible, tr.r:focus-visible, .copy:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
-details.grp { margin-top: 18px; }
-details.grp > summary { list-style: none; cursor: pointer; display: flex; align-items: baseline; gap: 10px; padding: 6px 0; }
+details.grp { margin-top: 22px; }
+details.grp > summary { list-style: none; cursor: pointer; display: flex; align-items: baseline; gap: 10px; padding: 4px 0 8px; }
 details.grp > summary::-webkit-details-marker { display: none; }
-details.grp > summary h2 { font-family: var(--display); font-size: 19px; font-weight: 700; margin: 0; }
-details.grp > summary .cnt { color: var(--muted); font-size: 14px; font-variant-numeric: tabular-nums; }
-details.grp > summary .arrow { margin-left: auto; color: var(--muted); font-size: 13px; transition: transform .15s; }
+details.grp > summary h2 { font-size: 17px; font-weight: 700; margin: 0; }
+details.grp > summary .cnt { color: var(--muted); font-size: 13px; font-variant-numeric: tabular-nums; }
+details.grp > summary .arrow { margin-left: auto; color: var(--muted); font-size: 12px; transition: transform .15s; }
 details.grp[open] > summary .arrow { transform: rotate(180deg); }
 
-.list { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
-.item + .item { border-top: 1px solid var(--line); }
-.row { display: flex; align-items: center; gap: 12px; width: 100%; padding: 12px 14px; background: none; border: none; color: inherit; font: inherit; text-align: left; cursor: pointer; }
-.row .dd { flex: none; width: 46px; text-align: center; font-variant-numeric: tabular-nums; font-weight: 600; font-size: 13px; padding: 4px 0; border-radius: 8px; background: var(--accent-soft); color: var(--accent); }
-.row .dd.crit { background: var(--crit-soft); color: var(--crit); }
-.row .dd.warn { background: var(--warn-soft); color: var(--warn); }
-.row .dd.off { background: transparent; border: 1px solid var(--line); color: var(--muted); font-weight: 500; font-size: 12px; }
-.row .t { flex: 1; min-width: 0; }
-.row .n { font-weight: 600; font-size: 15.5px; line-height: 1.3; }
-.row .s { color: var(--muted); font-size: 13px; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.row .chev { flex: none; color: var(--muted); font-size: 12px; transition: transform .15s; }
-.item.open .row .chev { transform: rotate(180deg); }
-.detail { padding: 0 14px 14px 72px; font-size: 14.5px; }
-.detail dl { display: grid; grid-template-columns: 52px 1fr; gap: 5px 10px; margin: 0; }
-.detail dt { color: var(--muted); font-size: 13px; padding-top: 1px; }
-.detail dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
-.detail .tags { display: flex; flex-wrap: wrap; gap: 5px; margin: 0 0 10px; }
-.tag { font-size: 12px; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); }
+.tbl { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+th { text-align: left; font-size: 12px; font-weight: 500; color: var(--muted); letter-spacing: .03em; padding: 9px 12px; background: var(--surface-2); border-bottom: 1px solid var(--line); white-space: nowrap; }
+td { padding: 10px 12px; border-top: 1px solid var(--line); vertical-align: top; font-size: 14px; overflow-wrap: anywhere; }
+tr.r { cursor: pointer; }
+tr.r:hover td { background: var(--surface-2); }
+tr.r.open td { background: var(--accent-soft); border-bottom: none; }
+tbody tr:first-child td { border-top: none; }
+td.dd { white-space: nowrap; font-variant-numeric: tabular-nums; }
+.badge { display: inline-block; min-width: 44px; text-align: center; font-weight: 700; font-size: 12.5px; padding: 3px 8px; border-radius: 7px; background: var(--accent-soft); color: var(--accent); }
+.badge.crit { background: var(--crit-soft); color: var(--crit); }
+.badge.warn { background: var(--warn-soft); color: var(--warn); }
+.badge.off { background: transparent; border: 1px solid var(--line); color: var(--muted); font-weight: 500; }
+td.dd .date { display: block; color: var(--muted); font-size: 12px; margin-top: 3px; }
+td.nm { font-weight: 500; }
+td.nm .fld { display: none; color: var(--muted); font-size: 12px; font-weight: 400; margin-top: 2px; }
+td.lv { white-space: nowrap; }
+.tag { font-size: 12px; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); white-space: nowrap; }
 .tag.ok { background: var(--ok-soft); color: var(--ok); border-color: transparent; }
 .tag.mid { background: var(--warn-soft); color: var(--warn); border-color: transparent; }
 .tag.bad { background: var(--crit-soft); color: var(--crit); border-color: transparent; }
-.detail h4 { margin: 12px 0 3px; font-size: 12.5px; letter-spacing: .04em; color: var(--muted); font-weight: 600; }
-.detail p { margin: 0; overflow-wrap: anywhere; }
-@media (max-width: 480px) { .detail { padding-left: 14px; } }
+.free { color: var(--ok); font-weight: 500; }
+tr.d td { background: var(--surface-2); padding: 14px 16px 18px; border-top: none; }
+.dgrid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 10px 32px; font-size: 14px; }
+.dgrid h4 { margin: 0 0 4px; font-size: 12px; letter-spacing: .04em; color: var(--muted); font-weight: 500; }
+.dgrid p { margin: 0 0 10px; }
+.dgrid dl { display: grid; grid-template-columns: 56px 1fr; gap: 4px 10px; margin: 0 0 10px; }
+.dgrid dt { color: var(--muted); font-size: 12.5px; }
+.dgrid dd { margin: 0; }
+.col-fld { width: 11%; } .col-dd { width: 92px; } .col-prz { width: 22%; } .col-fee { width: 11%; } .col-who { width: 16%; } .col-lv { width: 120px; } .col-loc { width: 56px; }
+@media (max-width: 900px) { .col-who, td.who, th.who { display: none; } .col-prz { width: 26%; } }
+@media (max-width: 720px) { .col-fld, td.fld, th.fld, .col-lv, td.lv, th.lv { display: none; } td.nm .fld { display: block; } .dgrid { grid-template-columns: 1fr; } }
+@media (max-width: 480px) { .col-fee, td.fee, th.fee { display: none; } .col-dd { width: 70px; } td, th { padding-inline: 9px; } .col-prz { width: 34%; } .badge { min-width: 40px; } }
 .empty { color: var(--muted); text-align: center; padding: 28px 0; }
 
-details.aux { margin-top: 22px; border-top: 1px solid var(--line); padding-top: 6px; }
+details.aux { margin-top: 26px; border-top: 1px solid var(--line); padding-top: 6px; }
 details.aux > summary { cursor: pointer; color: var(--muted); font-size: 14px; padding: 8px 0; }
 details.aux ul { margin: 6px 0 0; padding-left: 18px; font-size: 14px; }
 details.aux li { margin: 3px 0; }
 details.aux .d { color: var(--muted); font-variant-numeric: tabular-nums; margin-right: 6px; }
-.copy { font: inherit; font-size: 14px; font-weight: 600; background: var(--accent); color: #fff; border: none; border-radius: 999px; padding: 8px 16px; cursor: pointer; margin-top: 8px; }
+.copy { font: inherit; font-size: 14px; font-weight: 500; background: var(--accent); color: #fff; border: none; border-radius: 999px; padding: 8px 16px; cursor: pointer; margin-top: 8px; }
 .st { font-size: 13px; color: var(--ok); margin-left: 10px; }
-textarea { width: 100%; margin-top: 10px; font: inherit; font-size: 13px; line-height: 1.5; min-height: 150px; border: 1px solid var(--line); border-radius: 10px; padding: 10px; background: var(--bg); color: var(--fg); resize: vertical; }
-.foot { margin-top: 28px; color: var(--muted); font-size: 12.5px; line-height: 1.6; }
-@media (prefers-reduced-motion: reduce) { .chev, .arrow, .chip { transition: none; } }
+textarea { width: 100%; max-width: 640px; display: block; margin-top: 10px; font: inherit; font-size: 13px; line-height: 1.5; min-height: 150px; border: 1px solid var(--line); border-radius: 10px; padding: 10px; background: var(--surface); color: var(--fg); resize: vertical; }
+.foot { margin-top: 28px; color: var(--muted); font-size: 12.5px; line-height: 1.6; max-width: 720px; }
+@media (prefers-reduced-motion: reduce) { .arrow, .chip { transition: none; } }
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
-    <h1>AI 공모전 알림판</h1>
-    <div class="sub" id="sub">불러오는 중…</div>
+    <div>
+      <h1>AI 공모전 알림판</h1>
+      <div class="sub" id="sub">불러오는 중…</div>
+    </div>
     <div class="stats" id="stats"></div>
   </header>
 
@@ -132,7 +149,9 @@ textarea { width: 100%; margin-top: 10px; font: inherit; font-size: 13px; line-h
     <button class="chip" data-f="kr" aria-pressed="false">국내</button>
     <button class="chip" data-f="intl" aria-pressed="false">해외</button>
     <button class="chip" data-f="free" aria-pressed="false">참가비 없음</button>
-    <input id="q" type="search" placeholder="검색" aria-label="검색">
+    <span class="sp"></span>
+    <input id="q" type="search" placeholder="이름·분야 검색" aria-label="검색">
+    <select id="sort" aria-label="정렬"><option value="deadline">마감 빠른 순</option><option value="prize">상금 큰 순</option></select>
   </div>
 
   <div id="groups"></div>
@@ -154,7 +173,7 @@ textarea { width: 100%; margin-top: 10px; font: inherit; font-size: 13px; line-h
 
 <script>
 (function () {
-  var state = { filter: 'all', q: '', data: null, open: {} };
+  var state = { filter: 'all', q: '', sort: 'deadline', data: null, open: {} };
   var $ = function (id) { return document.getElementById(id); };
 
   function todayKST() { return new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Seoul' }); }
@@ -168,50 +187,54 @@ textarea { width: 100%; margin-top: 10px; font: inherit; font-size: 13px; line-h
   function fmtDate(iso) { return iso ? (+iso.slice(5,7)) + '/' + (+iso.slice(8,10)) : '미정'; }
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   function lvlClass(l) { return /공식/.test(l) ? 'ok' : /일부/.test(l) ? 'mid' : 'bad'; }
+  function lvlShort(l) { return /공식/.test(l) ? '공식 확인' : /일부/.test(l) ? '일부 확인' : /자격/.test(l) ? '자격 제한' : '재확인 필요'; }
   function shortPrize(p) {
-    if (!p || /미확인|미공개|추후/.test(p)) return '상금 미확인';
+    if (!p || /미확인|미공개|추후/.test(p)) return '미확인';
     var s = p.split(/ \/ |\(|:/)[0].trim();
-    return s.length > 26 ? s.slice(0, 25) + '…' : s;
+    return s.length > 34 ? s.slice(0, 33) + '…' : s;
   }
+  function shortFee(f) { if (!f) return '미확인'; if (/^없음|^무료/.test(f)) return '없음'; var s = f.split(/\(|,|\.|·/)[0].trim(); return s.length > 18 ? s.slice(0, 17) + '…' : s; }
+  function shortWho(w) { if (!w) return ''; var s = w.split(/\(|\./)[0].trim(); return s.length > 24 ? s.slice(0, 23) + '…' : s; }
   function bucketOf(it) {
     var d = daysLeft(it.deadline);
     if (d === null) return { key: 'z-none', title: '접수 예정 · 마감 미정', order: 9000 };
     if (d < 0) return { key: 'z-closed', title: '종료', order: 9999 };
     if (d <= 7) return { key: 'a-week', title: '이번 주 마감', order: 0 };
     if (d <= 14) return { key: 'b-next', title: '다음 주 마감', order: 1 };
-    var y = +it.deadline.slice(0,4), m = +it.deadline.slice(5,7);
-    var ty = +todayKST().slice(0,4);
+    var y = +it.deadline.slice(0,4), m = +it.deadline.slice(5,7), ty = +todayKST().slice(0,4);
     return { key: 'c-' + it.deadline.slice(0,7), title: (y !== ty ? y + '년 ' : '') + m + '월 마감', order: 100 + y * 12 + m };
   }
 
   function rowHTML(it) {
-    var d = daysLeft(it.deadline);
-    var dcls = 'dd', dtxt;
-    if (d === null) { dcls += ' off'; dtxt = it.kind === '예정' ? '예정' : '미정'; }
-    else if (d < 0) { dcls += ' off'; dtxt = '종료'; }
-    else { dtxt = 'D-' + d; if (d <= 3) dcls += ' crit'; else if (d <= 7) dcls += ' warn'; }
-    var bits = [shortPrize(it.prize)];
-    if (it.free) bits.push('참가비 없음');
-    bits.push(it.loc);
-    if (it.kind === '자격확인') bits.push('자격 확인 필요');
+    var d = daysLeft(it.deadline), bc = 'badge', bt;
+    if (d === null) { bc += ' off'; bt = it.kind === '예정' ? '예정' : '미정'; }
+    else if (d < 0) { bc += ' off'; bt = '종료'; }
+    else { bt = 'D-' + d; if (d <= 3) bc += ' crit'; else if (d <= 7) bc += ' warn'; }
     var open = !!state.open[it.id];
-    var tags = '<span class="tag">' + esc(it.field) + '</span><span class="tag ' + lvlClass(it.level) + '">' + esc(it.level) + '</span>';
-    var det = '<div class="tags">' + tags + '</div><dl>' +
-      '<dt>마감</dt><dd>' + esc(it.deadlineNote || fmtDate(it.deadline)) + '</dd>' +
-      '<dt>시상</dt><dd>' + esc(it.prize) + '</dd>' +
-      '<dt>참가비</dt><dd>' + esc(it.fee) + '</dd>' +
-      '<dt>대상</dt><dd>' + esc(it.eligibility) + '</dd></dl>';
-    if (it.make) det += '<h4>만들 것 · 제출</h4><p>' + esc(it.make) + '</p>';
-    if (it.caution) det += '<h4>주의</h4><p>' + esc(it.caution) + '</p>';
-    det += '<h4>출처</h4><p><a href="' + esc(it.source) + '" target="_blank" rel="noopener">' + esc(it.source.replace(/^https?:\/\//, '').slice(0, 50)) + '</a>';
-    if (it.source2) det += '<br><a href="' + esc(it.source2) + '" target="_blank" rel="noopener">' + esc(it.source2.replace(/^https?:\/\//, '').slice(0, 50)) + '</a>';
-    det += '</p>';
-    return '<div class="item' + (open ? ' open' : '') + '" id="i-' + esc(it.id) + '">' +
-      '<button class="row" type="button" data-id="' + esc(it.id) + '" aria-expanded="' + open + '">' +
-      '<span class="' + dcls + '">' + dtxt + '</span>' +
-      '<span class="t"><span class="n">' + esc(it.name) + '</span><span class="s">' + esc(bits.join(' · ')) + '</span></span>' +
-      '<span class="chev">▼</span></button>' +
-      '<div class="detail"' + (open ? '' : ' hidden') + '>' + det + '</div></div>';
+    var who = it.kind === '자격확인' ? '※ ' + shortWho(it.eligibility) : shortWho(it.eligibility);
+    var row = '<tr class="r' + (open ? ' open' : '') + '" data-id="' + esc(it.id) + '" tabindex="0" aria-expanded="' + open + '">' +
+      '<td class="dd"><span class="' + bc + '">' + bt + '</span><span class="date">' + esc(fmtDate(it.deadline)) + '</span></td>' +
+      '<td class="nm">' + esc(it.name) + '<span class="fld">' + esc(it.field) + ' · ' + esc(it.loc) + '</span></td>' +
+      '<td class="fld">' + esc(it.field) + '</td>' +
+      '<td class="prz">' + esc(shortPrize(it.prize)) + '</td>' +
+      '<td class="fee">' + (it.free ? '<span class="free">없음</span>' : esc(shortFee(it.fee))) + '</td>' +
+      '<td class="who">' + esc(who) + '</td>' +
+      '<td class="lv"><span class="tag ' + lvlClass(it.level) + '">' + lvlShort(it.level) + '</span></td>' +
+      '</tr>';
+    var det = '<div class="dgrid"><div>' +
+      '<dl><dt>마감</dt><dd>' + esc(it.deadlineNote || fmtDate(it.deadline)) + '</dd><dt>시상</dt><dd>' + esc(it.prize) + '</dd><dt>참가비</dt><dd>' + esc(it.fee) + '</dd><dt>대상</dt><dd>' + esc(it.eligibility) + '</dd><dt>확인</dt><dd>' + esc(it.level) + ' · ' + esc(it.loc) + '</dd></dl>' +
+      (it.make ? '<h4>만들 것 · 제출</h4><p>' + esc(it.make) + '</p>' : '') + '</div><div>' +
+      (it.caution ? '<h4>주의</h4><p>' + esc(it.caution) + '</p>' : '') +
+      '<h4>출처</h4><p><a href="' + esc(it.source) + '" target="_blank" rel="noopener">' + esc(it.source.replace(/^https?:\/\//, '').slice(0, 60)) + '</a>' +
+      (it.source2 ? '<br><a href="' + esc(it.source2) + '" target="_blank" rel="noopener">' + esc(it.source2.replace(/^https?:\/\//, '').slice(0, 60)) + '</a>' : '') + '</p></div></div>';
+    row += '<tr class="d" id="d-' + esc(it.id) + '"' + (open ? '' : ' hidden') + '><td colspan="7">' + det + '</td></tr>';
+    return row;
+  }
+
+  function tableHTML(items) {
+    return '<div class="tbl"><table><colgroup><col class="col-dd"><col><col class="col-fld"><col class="col-prz"><col class="col-fee"><col class="col-who"><col class="col-lv"></colgroup>' +
+      '<thead><tr><th>마감</th><th>공모전 · 영화제</th><th class="fld">분야</th><th>시상</th><th class="fee">참가비</th><th class="who">대상</th><th class="lv">확인</th></tr></thead>' +
+      '<tbody>' + items.map(rowHTML).join('') + '</tbody></table></div>';
   }
 
   function render() {
@@ -227,38 +250,34 @@ textarea { width: 100%; margin-top: 10px; font: inherit; font-size: 13px; line-h
     var groups = {};
     shown.forEach(function (it) { var b = bucketOf(it); (groups[b.key] = groups[b.key] || { b: b, items: [] }).items.push(it); });
     var keys = Object.keys(groups).sort(function (a, b) { return groups[a].b.order - groups[b].b.order; });
-    var html = keys.map(function (k, idx) {
-      var g = groups[k];
-      g.items.sort(function (a, b) { var da = a.deadline || '9999', db = b.deadline || '9999'; return da < db ? -1 : da > db ? 1 : 0; });
-      if (k === 'z-closed') g.items.reverse();
+    function cmp(a, b) {
+      if (state.sort === 'prize') { var p = (b.prizeRank || 0) - (a.prizeRank || 0); if (p) return p; }
+      var da = a.deadline || '9999', db = b.deadline || '9999'; return da < db ? -1 : da > db ? 1 : 0;
+    }
+    $('groups').innerHTML = keys.map(function (k, idx) {
+      var g = groups[k]; g.items.sort(cmp); if (k === 'z-closed') g.items.reverse();
       var openDefault = idx < 2 && k !== 'z-closed' && k !== 'z-none';
-      return '<details class="grp" ' + (openDefault ? 'open' : '') + '><summary><h2>' + esc(g.b.title) + '</h2><span class="cnt">' + g.items.length + '건</span><span class="arrow">▼</span></summary><div class="list">' + g.items.map(rowHTML).join('') + '</div></details>';
+      return '<details class="grp"' + (openDefault ? ' open' : '') + '><summary><h2>' + esc(g.b.title) + '</h2><span class="cnt">' + g.items.length + '건</span><span class="arrow">▼</span></summary>' + tableHTML(g.items) + '</details>';
     }).join('');
-    $('groups').innerHTML = html;
     $('empty').hidden = shown.length > 0;
 
     var open = data.items.filter(function (it) { var d = daysLeft(it.deadline); return d === null || d >= 0; });
     var week = open.filter(function (it) { var d = daysLeft(it.deadline); return d !== null && d <= 7; }).length;
     var kr = open.filter(function (it) { return it.loc === '국내'; }).length;
-    $('stats').innerHTML = '<span>접수 중 <b>' + open.length + '</b>건</span><span>이번 주 마감 <b>' + week + '</b>건</span><span>국내 ' + kr + ' · 해외 ' + (open.length - kr) + '</span>';
-    $('sub').textContent = '오늘 ' + fmtDate(todayKST()) + ' 기준 · 목록 갱신 ' + fmtDate(data.updated);
+    var free = open.filter(function (it) { return it.free; }).length;
+    $('stats').innerHTML = '<div class="stat"><b>' + open.length + '</b>접수 중</div><div class="stat hot"><b>' + week + '</b>이번 주 마감</div><div class="stat"><b>' + kr + ' / ' + (open.length - kr) + '</b>국내 / 해외</div><div class="stat"><b>' + free + '</b>참가비 없음</div>';
+    $('sub').textContent = '오늘 ' + fmtDate(todayKST()) + ' 기준 · 목록 갱신 ' + fmtDate(data.updated) + ' · 줄을 누르면 자세히 보입니다';
     buildMsg(open);
   }
 
   function buildMsg(open) {
     var data = state.data;
     var lines = ['[AI 공모전 ' + fmtDate(todayKST()) + ' 기준]', ''];
-    var week = open.filter(function (it) { var d = daysLeft(it.deadline); return d !== null && d <= 7; })
-      .sort(function (a, b) { return a.deadline < b.deadline ? -1 : 1; });
+    var week = open.filter(function (it) { var d = daysLeft(it.deadline); return d !== null && d <= 7; }).sort(function (a, b) { return a.deadline < b.deadline ? -1 : 1; });
     lines.push('■ 이번 주 마감');
     if (!week.length) lines.push('- 없음');
-    week.forEach(function (it) {
-      lines.push('- ' + fmtDate(it.deadline) + ' (D-' + daysLeft(it.deadline) + ') ' + it.name + ' / ' + shortPrize(it.prize) + (it.kind !== '일반' ? ' ※자격 확인' : ''));
-    });
-    if (data.changes && data.changes.length) {
-      lines.push('', '■ 최근 변경');
-      data.changes.slice(0, 3).forEach(function (c) { lines.push('- ' + c.text); });
-    }
+    week.forEach(function (it) { lines.push('- ' + fmtDate(it.deadline) + ' (D-' + daysLeft(it.deadline) + ') ' + it.name + ' / ' + shortPrize(it.prize) + (it.kind !== '일반' ? ' ※자격 확인' : '')); });
+    if (data.changes && data.changes.length) { lines.push('', '■ 최근 변경'); data.changes.slice(0, 3).forEach(function (c) { lines.push('- ' + c.text); }); }
     lines.push('', '전체 목록: ' + location.href.split('#')[0].split('?')[0]);
     $('msg').value = lines.join('\n');
   }
@@ -271,19 +290,18 @@ textarea { width: 100%; margin-top: 10px; font: inherit; font-size: 13px; line-h
     render();
   });
   $('q').addEventListener('input', function () { state.q = this.value; render(); });
-  $('groups').addEventListener('click', function (e) {
-    var b = e.target.closest('.row'); if (!b) return;
-    var id = b.dataset.id, item = $('i-' + id), det = item.querySelector('.detail');
-    var now = det.hidden; det.hidden = !now; item.classList.toggle('open', now); b.setAttribute('aria-expanded', now ? 'true' : 'false');
-    state.open[id] = now;
-  });
+  $('sort').addEventListener('change', function () { state.sort = this.value; render(); });
+  function toggle(tr) {
+    var id = tr.dataset.id, det = $('d-' + id), now = det.hidden;
+    det.hidden = !now; tr.classList.toggle('open', now); tr.setAttribute('aria-expanded', now ? 'true' : 'false'); state.open[id] = now;
+  }
+  $('groups').addEventListener('click', function (e) { if (e.target.closest('a')) return; var tr = e.target.closest('tr.r'); if (tr) toggle(tr); });
+  $('groups').addEventListener('keydown', function (e) { if (e.key !== 'Enter' && e.key !== ' ') return; var tr = e.target.closest('tr.r'); if (tr) { e.preventDefault(); toggle(tr); } });
   $('copyBtn').addEventListener('click', function () {
     var ta = $('msg'), st = $('copySt');
     function fallback() { ta.focus(); ta.select(); st.textContent = '텍스트를 선택했습니다. 길게 눌러 복사하세요.'; }
-    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(ta.value).then(function () { st.textContent = '복사했습니다.'; }, fallback);
-    else fallback();
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(ta.value).then(function () { st.textContent = '복사했습니다.'; }, fallback); else fallback();
   });
-
   try { var saved = localStorage.getItem('cf'); if (saved) { state.filter = saved; Array.prototype.forEach.call(document.querySelectorAll('.chip'), function (c) { c.setAttribute('aria-pressed', c.dataset.f === saved ? 'true' : 'false'); }); } } catch (_) {}
 
   fetch('data/contests.json', { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (data) {
@@ -295,9 +313,7 @@ textarea { width: 100%; margin-top: 10px; font: inherit; font-size: 13px; line-h
     }
     $('foot').textContent = '마감이 지난 공모전은 "종료"에 모아 둡니다. 해외 공모전은 시간대가 없는 경우가 많아 한국 시각으로는 하루 먼저 끝날 수 있습니다. 제작 전에 출처의 공식 공고를 한 번 더 확인하세요.';
     render();
-  }).catch(function () {
-    $('sub').textContent = '목록을 불러오지 못했습니다. 잠시 후 다시 열어 주세요.';
-  });
+  }).catch(function () { $('sub').textContent = '목록을 불러오지 못했습니다. 잠시 후 다시 열어 주세요.'; });
 })();
 </script>
 </body>
